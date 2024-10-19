@@ -1,0 +1,64 @@
+# Ninja Buildfile
+
+# Name
+name = win-c
+
+# C Compiler
+cc = clang
+
+# Common compilation flags (same for all platforms)
+common_flags = -std=c2y -ffast-math -Wall -Wextra -Wconversion -Wshadow -fdiagnostics-color=always -fansi-escape-codes -fno-short-wchar
+
+# Platform-specific settings
+# Windows
+extension = .exe
+# Unix (Linux/MacOS...)
+# extension = 
+
+# Directory paths (platform-independent)
+build_dir = build
+source_dir = source
+include_dir = -I include
+
+# Release-specific and Debug-specific flags
+release_flags = -O3 -DNDEBUG -g0 -fno-stack-protector -fomit-frame-pointer -flto -ffunction-sections -fdata-sections
+debug_flags = -Og -g3 -fsanitize=address,undefined -fstack-protector-all
+
+# Linker flags for release and debug
+release_linker_flags = -Wl,-s
+debug_linker_flags = 
+
+# Compilation and linking rules
+rule compile
+    command = $cc -c $in $common_flags $include_dir -o $out $flags
+    description = Compiling $in to $out
+
+rule link
+    command = $cc $in $common_flags $include_dir -o $out $flags
+    description = Linking $in to $out
+
+# IDE Generation Scripts (OS-specific)
+rule ide_windows
+    command = ide.cmd $out
+    description = Generating $out
+
+# Select between Debug and Release builds
+# Debug Build
+flags = $debug_flags
+linker_flags = $debug_linker_flags
+# Release Build
+# flags = $release_flags
+# linker_flags = $release_linker_flags
+
+
+
+# Actual compilation
+
+# Build object files
+build $build_dir/main.o: compile $source_dir/main.c
+
+# Build final executable (with .exe extension on Windows)
+build $build_dir/$name$extension: link $build_dir/main.o $build_dir/lexer.o
+    flags = $flags $linker_flags
+
+build compile_commands.json: ide_windows

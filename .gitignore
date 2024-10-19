@@ -1,0 +1,11 @@
+build/
+
+.ninja_log
+
+ide.cmd
+.cache/
+compile_commands.json
+
+Thumbs.db
+ehthumbs.db
+.DS_Store
