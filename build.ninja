@@ -1,64 +1,59 @@
-# Ninja Buildfile
+## Basic-Configuration
+cc         = clang
+build_name = win-c
+build_dir  = build
+source_dir = source
+include_dir = include
 
-# Name
-name = win-c
-
-# C Compiler
-cc = clang
-
-# Common compilation flags (same for all platforms)
+## Compilation flags
 common_flags = -std=c2y -ffast-math -Wall -Wextra -Wconversion -Wshadow -fdiagnostics-color=always -fansi-escape-codes -fno-short-wchar
 
-# Platform-specific settings
-# Windows
+## Platform-Specific Flags
+### Windows
 extension = .exe
-# Unix (Linux/MacOS...)
-# extension = 
+### Unix
+# extension =
 
-# Directory paths (platform-independent)
-build_dir = build
-source_dir = source
-include_dir = -I include
-
-# Release-specific and Debug-specific flags
+## Optimization
+###  Release Flag
 release_flags = -O3 -DNDEBUG -g0 -fno-stack-protector -fomit-frame-pointer -flto -ffunction-sections -fdata-sections
+### Debug Flags
 debug_flags = -Og -g3 -fsanitize=address,undefined -fstack-protector-all
 
-# Linker flags for release and debug
+## Linker Flags
 release_linker_flags = -Wl,-s
 debug_linker_flags = 
 
-# Compilation and linking rules
+## Compilation Rules
 rule compile
-    command = $cc -c $in $common_flags $include_dir -o $out $flags
+    command = $cc -c $in $common_flags -I $include_dir$ -o $out $flags
     description = Compiling $in to $out
 
 rule link
-    command = $cc $in $common_flags $include_dir -o $out $flags
+    command = $cc $in $common_flags $include_dir -o $out $flags $linker_flags
     description = Linking $in to $out
 
-# IDE Generation Scripts (OS-specific)
+## IDE Generation Rules (Windows)
 rule ide_windows
     command = ide.cmd $out
     description = Generating $out
 
-# Select between Debug and Release builds
-# Debug Build
+## Build Configurations
+### Set Debug as default build type (uncomment to switch to Release)
 flags = $debug_flags
 linker_flags = $debug_linker_flags
-# Release Build
+
+### For Release builds, uncomment the following lines:
 # flags = $release_flags
 # linker_flags = $release_linker_flags
 
-
-
-# Actual compilation
-
-# Build object files
+## Build instructions
+### Object file Compilation
 build $build_dir/main.o: compile $source_dir/main.c
 
-# Build final executable (with .exe extension on Windows)
-build $build_dir/$name$extension: link $build_dir/main.o $build_dir/lexer.o
+### Linking
+build $build_dir/$build_name$extension: link $build_dir/main.o
     flags = $flags $linker_flags
 
+### IDE project generation
 build compile_commands.json: ide_windows
