@@ -37,8 +37,8 @@ extern int mainCRTStartup() {
 
 	int return_code = win_c_main();
 
-	// TODO: REVISIT AFTER threading added
-	// ExitProcess((unsigned int) return_code);
+	// n2347 5.1.2.2.3
+	ExitProcess((unsigned int) return_code);
 
 	return return_code;
 }
