@@ -8,3 +8,5 @@ compile_commands.json
 Thumbs.db
 ehthumbs.db
 .DS_Store
+
+*.sublime-workspace
