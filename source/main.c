@@ -1,8 +1,20 @@
-#include <stdio.h>
+#include "win-c/windows/user32.h"
+#include "win-c/windows/kernel32.h"
+#include "win-c/windows/shell32.h"
 
 
-int main() {
-	printf("Hello world.\n");
 
-	return 0;
+void output(unsigned short* string) {
+	MessageBoxW(nullptr, string, u"Ausgabe", 0);
+}
+
+
+
+int main(int argc, char** argv) {
+	
+	for(int i = 0; i < argc; i++) {
+		MessageBoxA(nullptr, argv[i], "Ausgabe", 0);
+	}
+
+    return 0;
 }

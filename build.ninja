@@ -1,28 +1,28 @@
 ## Basic-Configuration
-cc         = clang
-build_name = win-c
-build_dir  = build
-source_dir = source
-include_dir = include
+cc          = clang
+ld          = 
+build_name  = win-c
+build_dir   = build
+source_dir  = source
+include_dir = "include"
 
 ## Compilation flags
-common_flags = -std=c2y -ffast-math -Wall -Wextra -Wconversion -Wshadow -fdiagnostics-color=always -fansi-escape-codes -fno-short-wchar
+common_flags = -target x86_64-pc-windows-gnu -fuse-ld=lld -std=c2y -pedantic -ffast-math -Wall -Wextra -Wconversion -Wshadow -fdiagnostics-color=always -fansi-escape-codes -fno-short-wchar -nodefaultlibs -nostdlib -nostdinc
 
 ## Platform-Specific Flags
-### Windows
 extension = .exe
-### Unix
-# extension =
 
 ## Optimization
 ###  Release Flag
 release_flags = -O3 -DNDEBUG -g0 -fno-stack-protector -fomit-frame-pointer -flto -ffunction-sections -fdata-sections
 ### Debug Flags
-debug_flags = -Og -g3 -fsanitize=address,undefined -fstack-protector-all
+debug_flags = -Og -g3 -fno-inline -fkeep-static-consts
 
 ## Linker Flags
+common_linker_flags = -luser32 -lkernel32 -lshell32
 release_linker_flags = -Wl,-s
-debug_linker_flags = 
+debug_linker_flags =
+windows_library = "C:\Program Files (x86)\Windows Kits\8.1\Lib\winv6.3\um\x64"
 
 ## Compilation Rules
 rule compile
@@ -30,18 +30,18 @@ rule compile
     description = Compiling $in to $out
 
 rule link
-    command = $cc $in $common_flags $include_dir -o $out $flags $linker_flags
+    command = $cc $in $common_flags -I $include_dir -o $out $flags $linker_flags -L $windows_library
     description = Linking $in to $out
 
-## IDE Generation Rules (Windows)
-rule ide_windows
+## IDE Generation Rules
+rule ide
     command = ide.cmd $out
     description = Generating $out
 
 ## Build Configurations
 ### Set Debug as default build type (uncomment to switch to Release)
 flags = $debug_flags
-linker_flags = $debug_linker_flags
+linker_flags = $common_linker_flags $debug_linker_flags
 
 ### For Release builds, uncomment the following lines:
 # flags = $release_flags
@@ -50,10 +50,11 @@ linker_flags = $debug_linker_flags
 ## Build instructions
 ### Object file Compilation
 build $build_dir/main.o: compile $source_dir/main.c
+build $build_dir/crt_entry.o: compile $source_dir/crt_entry.c
+
 
 ### Linking
-build $build_dir/$build_name$extension: link $build_dir/main.o
-    flags = $flags $linker_flags
+build $build_dir/$build_name$extension: link $build_dir/main.o $build_dir/crt_entry.o
 
 ### IDE project generation
-build compile_commands.json: ide_windows
+build compile_commands.json: ide
