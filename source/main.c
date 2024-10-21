@@ -5,8 +5,11 @@ void output(unsigned short* string) {
 }
 
 int main(int argc, char** argv) {
-	for (int i = 0; i < argc; i++) {
-		MessageBoxA(nullptr, argv[i], "Ausgabe", 0);
+	int i = 0;
+	while(argv[i] != nullptr) {
+		MessageBoxA(nullptr, argv[i], "", 0);
+		
+		i++;
 	}
 
 	return 0;
