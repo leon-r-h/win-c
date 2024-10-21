@@ -1,9 +1,11 @@
 #ifndef WIN_C_STDDEF_H
 #define WIN_C_STDDEF_H
 
-#define offsetof(TYPE, MEMBER) __builtin_offsetof(TYPE, MEMBER)
+#include "win-c/null.h"
+#ifdef WIN_C_NULL_H
+#endif
 
-#define NULL ((void*) 0)
+#define offsetof(TYPE, MEMBER) __builtin_offsetof(TYPE, MEMBER)
 
 typedef __PTRDIFF_TYPE__ ptrdiff_t;
 typedef __WCHAR_TYPE__ wchar_t;
