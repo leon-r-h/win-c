@@ -1,0 +1,53 @@
+BasedOnStyle: Chromium
+
+Language: Cpp
+Standard: Latest
+
+IndentWidth: 4
+TabWidth: 4
+BracedInitializerIndentWidth: 4
+UseTab: Always
+
+AlignAfterOpenBracket: Align
+AlignArrayOfStructures: Left
+AlignConsecutiveAssignments: None
+AlignConsecutiveBitFields: AcrossEmptyLines
+AlignConsecutiveDeclarations: None
+AlignConsecutiveMacros: Consecutive
+AlignConsecutiveShortCaseStatements:
+  Enabled: true
+  AcrossEmptyLines: true
+  AcrossComments: true
+  AlignCaseColons: false
+AlignEscapedNewlines: Left
+AlignOperands: AlignAfterOperator
+AlignTrailingComments: Always
+AllowAllArgumentsOnNextLine: false
+AllowAllParametersOfDeclarationOnNextLine: true
+AllowShortBlocksOnASingleLine: Always
+AllowShortCaseExpressionOnASingleLine: true
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortEnumsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: true
+AllowShortLoopsOnASingleLine: false
+BinPackArguments: false
+BinPackParameters: true
+BitFieldColonSpacing: Both
+BreakBeforeBraces: Attach
+BreakFunctionDefinitionParameters: false
+ColumnLimit: 80
+DerivePointerAlignment: true
+LineEnding: LF
+MaxEmptyLinesToKeep: 1
+PointerAlignment: Left
+QualifierAlignment: Left
+ReflowComments: true
+SortIncludes: CaseInsensitive
+SpaceAroundPointerQualifiers: Default
+SpaceInEmptyBlock: false
+SpaceBeforeSquareBrackets: false
+KeepEmptyLines:
+  AtEndOfFile: true
+  AtStartOfBlock: false
+  AtStartOfFile: false

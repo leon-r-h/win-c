@@ -5,6 +5,4 @@
 
 #define NULL nullptr
 
-
-
 #endif
