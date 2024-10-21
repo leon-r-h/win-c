@@ -2,6 +2,8 @@
 #define WIN_C_STDINT_H
 
 #include <stddef.h>
+#ifdef WIN_C_STDDEF_H
+#endif
 
 typedef __INT8_TYPE__   int8_t;
 typedef __UINT8_TYPE__  uint8_t;
