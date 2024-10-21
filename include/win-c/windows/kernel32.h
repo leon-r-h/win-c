@@ -18,12 +18,9 @@ enum win_c_kernel32_codepage : unsigned int {
 extern unsigned short* GetCommandLineW(void);
 extern char* GetCommandLineA(void);
 extern void LocalFree(void* hMem);
-extern int WideCharToMultiByte(enum win_c_kernel32_codepage CodePage,
-							   unsigned long dwFlags,
-							   unsigned short* lpWideCharStr, int cchWideChar,
-							   char* lpMultiByteStr, int cbMultiByte,
-							   const char* lpDefaultChar,
-							   bool* lpUsedDefaultChar);
+extern int WideCharToMultiByte(enum win_c_kernel32_codepage CodePage, unsigned long dwFlags,
+							   unsigned short* lpWideCharStr, int cchWideChar, char* lpMultiByteStr, int cbMultiByte,
+							   const char* lpDefaultChar, bool* lpUsedDefaultChar);
 extern void* LocalAlloc(unsigned int uFlags, unsigned long uBytes);
 extern void ExitProcess(unsigned int uExitCode);
 extern int lstrlenW(const unsigned short* lpString);
